@@ -16,7 +16,7 @@
 	cd CRAG
   	pip install pysam
 	```
-2. Download the test bam file and required GC and mappability files
+2. Download the test bam file, required GC and mappability files
 	```
 	cd Basic_info
 	wget -c https://zenodo.org/record/3928546/files/GC.zip
@@ -35,9 +35,9 @@
 	python bam_read.py -in BH01.chr22.bam -out test_dir
 	matlab -nodisplay -r 'CRAG test_dir 1; exit;' 	
 	```
-You will get a lot of WARNING message about no reads in chromosome since we only provided reads in chr22 at the test bam file. 
+You will get a lot of WARNING messages about no reads in the chromosomes since we only provided reads in chr22 in the test BAM file. 
 
-**You need at least 10Gb memory to finish the test example**. At our server, it costs about 10 mins at CentOS 7 with 10Gb memory and one CPU core: Intel(R) Xeon(R) CPU E5-2695 v3 @ 2.30GHz	
+**You need at least 10 GB of memory to finish the test example**. At our server, it costs about 10 minutes at CentOS 7 with 10Gb memory and one CPU core: Intel(R) Xeon(R) CPU E5-2695 v3 @ 2.30GHz	
 
 This should produce the following files (inside test_dir/result_n/):
 	* the hotspots (peak_all.mat, peaks.bed), 
@@ -54,7 +54,7 @@ This should produce the following files (inside test_dir/result_n/):
 
 
 #### required files
-* Indexed Bam file (paired-end whole-genome sequencing, recommend to have at least 200 million fragments in autosomes after the samtools filtering step. If you want to call hotspots for several chrommsomes (not the whole autosome), you can provide the bam file only with the corresponding chromosomes.)
+* Indexed Bam file (paired-end whole-genome sequencing, recommend to have at least 200 million fragments in autosomes after the samtools filtering step. If you want to call hotspots for several chromosomes (not the whole autosome), you can provide the bam file only with the corresponding chromosomes.)
 * Basic_info directory **Always link the Basic_info/ under your current working directory** (example is showed in Quick Start part)
 * GC content files (provided in [zenodo.org](https://zenodo.org/record/3928546/files/GC.zip) for hg19/GRch37, download it under Basic_info directory and unzip it)
 * Mappability files (provided in [zenodo.org](https://zenodo.org/record/3928546/files/mappability.zip) for hg19/GRch37, download it under Basic_info directory and unzip it)
@@ -72,11 +72,11 @@ python bam_read.py -in output.filtered.bam -out result_dir
 ### Hotspot calling
 Two modes for the hotspot calling: 1 - call hotspots using IFS. 2 - call hotspots using GC bias corrected IFS.
 There are two choices to run the tool:
-- Run it directly at matlab (all the following code examples will follow this style)
+- Run it directly in MATLAB (all the following code examples will follow this style)
 ```
 CRAG('result_dir',1)
 ```
-- Run it at linux bash with matlab installed
+- Run it on Linux bash with MATLAB installed
 ```
 matlab -nodisplay -r 'CRAG result_dir 1; exit;'
 ```
@@ -102,22 +102,22 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 	IFS_write('PNAS/C309')
 	```
 	
-2. Call hotspots for all the samples of a specific categoty:
+2. Call hotspots for all the samples of a specific category:
 	* Function:
 		```
 		Hotspot_call_multi_sample.m
 		```
 	* Parameters:
-		* file_list: an file name of excel (.xlsx or xls) file, which contain all the sample names, or a cell variable (N /* 1) contain all the sample names. For example, 'HCC.xlsx', which contain one column, in each row of the column is the name a sample of HCC.
-		* input_path:the path of all the samples, such as 'PNAS'
-		* out_name:the outfile file name you want, such as 'HCC'
+		* file_list: an file name of excel (.xlsx or xls) file, which contains all the sample names, or a cell variable (N /* 1) containing all the sample names. For example, 'HCC.xlsx', which contains one column, in each row of the column is the name of a sample of HCC.
+		* input_path: the path of all the samples, such as 'PNAS'
+		* out_name: the outfile file name you want, such as 'HCC'
 		* peak_type: 1-call hotspots without GC bias correction; 2- call hotspots based on IFS after GC bias correction
-	* Optional parameters (the same with hotspot calling in single sample):
+	* Optional parameters (the same as hotspot calling in a single sample):
 		* global_p: global p-value cut off
 		* local_p: p-value cut-off for local test
 		* fdr: cut-off
 		* distance: Distance cut-off to merge the significant regions nearby.
-		* enrichment:whether or not do enrichment for the hotspot.
+		* enrichment: whether or not do enrichment for the hotspot.
 	* Example code to call hotspot (IFS, no GC bias corrected) in all HCC samples under PNAS/ directory by using the sample information at HCC.xlsx:
 		```
 		Hotspot_call_multi_sample('HCC.xlsx','PNAS','HCC',1,'enrichment',0)
@@ -129,12 +129,12 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 		IFS_matrix_obtain.m
 		```
 	* Parameters:
-		* file_list:the name of an excel file (include the Suffix name), or a variable include all the the files.
+		* file_list: the name of an excel file (include the Suffix name), or a variable include all the the files.
 		* input_path: The path of all the files
 		* out_name: The output file name (matrix file name)
 		* peak_type： Peak_type==1: IFS. Peak_type==2: GC bias corrected IFS.
 		* peak_file: The sample name for the hotspots to obtain the IFS score.
-	* For example, when we do upsupervised analysis of HCC samples and healthy samples, For each HCC samples (healthy samples), we want to get the IFS score of both the HCC hotspots and healthy hotspots. If we have the hotspots of HCC samples in HCC/result_n/ and the hotspots of healthy samples in healthy/result_n/, we could run:
+	* For example, when we do unsupervised analysis of HCC samples and healthy samples, for each HCC samples (healthy samples), we want to get the IFS score of both the HCC hotspots and healthy hotspots. If we have the hotspots of HCC samples in HCC/result_n/ and the hotspots of healthy samples in healthy/result_n/, we could run:
 		```
 		IFS_matrix_obtain('HCC.xlsx','PNAS','HCC/result_n/norm_IFS.mat',1,'HCC','healthy')
 		```
@@ -146,13 +146,13 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 		```
 	* Parameters:
 		* distance_type:
-			* 1: clustergram using spearman Correlation coefficient as similarity (distance evalulation method) and 'weighted' as linkage algorithm;
-			* 2: clustergram using euclidean as similarity (distance evalulation method) and 'ward' as linkage algorithm
-		* feature_num: The number of the hotspots were used for clustering (most variabel hotpots).
+			* 1: clustergram using Spearman's Correlation coefficient as similarity (distance evaluation method) and 'weighted' as linkage algorithm;
+			* 2: clustergram using Euclidean as similarity (distance evaluation method) and 'ward' as linkage algorithm
+		* feature_num: The number of hotspots was used for clustering (most variable hotspots).
 		* matrix_file：The .mat file for the IFS matrix of this type 
 		* color:after clustering, the color to denote this type
 
-	* For example, if we want to use top 10k hotspots in HCC and healthy samples to do hierarchical clustering (Spearman Correlation coefficient as similarity (distance evalulation method) and 'weighted' as linkage algorithm). "red" to color HCC and "green" to color healthy samples. The command should be:
+	* For example, if we want to use the top 10k hotspots in HCC and healthy samples to do hierarchical clustering (Spearman Correlation coefficient as similarity (distance evaluation method) and 'weighted' as linkage algorithm). "red" to color HCC and "green" to color healthy samples. The command should be:
 		```cluster_analysis_var(1,100000,'HCC/result_n/norm_IFS.mat','r','healthy/result_n/norm_IFS.mat','g')
 		```
 	
@@ -162,7 +162,7 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 		PCA_analysis.m
 		```
 	* Parameters:
-		* color:after clustering, the color to denote this type
+		* color: after clustering, the color to denote this type
 	* Example code:
 		```
 		PCA_analysis('HCC/result_n/norm_IFS.mat','r','healthy/result_n/norm_IFS.mat','g')
@@ -174,7 +174,7 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 		PCA_analysis.m
 		```
 	* Parameters:
-		* p_cut: The p-value cut off in one-way anvoa to select the features
+		* p_cut: The p-value cut-off in one-way anvoa to select the features
 		* out_name: The name of the output data. 
 		* matrix_file1：The .mat file for the IFS matrix of the first type
 		* color1: The color for the first category (for future analysis).
@@ -182,7 +182,7 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 		* color2: The color for the second category.
 		* matrix_fileN
 		* colorN
-	* For example, if we want to visualize the breast cancer samples (IFS matrtrix in Breast/norm_IFS.mat), lung cancer samples (IFS matrtrix in Lung/norm_IFS.mat), ovarian cancer (IFS matrtrix in Ovarian/norm_IFS.mat) and healthy samples (IFS matrtrix in healthy/norm_IFS.mat), the command could be as following:
+	* For example, if we want to visualize the breast cancer samples (IFS matrix in Breast/norm_IFS.mat), lung cancer samples (IFS matrix in Lung/norm_IFS.mat), ovarian cancer (IFS matrix in Ovarian/norm_IFS.mat), and healthy samples (IFS matrix in healthy/norm_IFS.mat), the command could be as follows:
 		```
 		ANVOA_calculate (0.01,'ANVOA_IFS_matrix.mat','Breast/norm_IFS.mat','m','Lung/norm_IFS.mat','k','Lung/norm_IFS.mat','b','healthy/norm_IFS.mat','r')
 		```
@@ -199,26 +199,26 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 		TSNE.m
 		```
 	* Parameters:
-		* matrix file: The file should including at least three variable:
-			* data: N * M matrix,N - hotspots number,M - sample num;
+		* matrix file: The file should include at least three variables:
+			* data: N * M matrix,N - hotspots number, M - sample num;
 			* label:M*1: The category of the M samples (1,2,3,etc)
-			* p：N*1：p-value of the hotspots in anvoa test
-		* col:X * 1,cell of string, describes the color of the X types, if not exist, the color will be randomly assigned.
+			* p： N*1：p-value of the hotspots in anova test
+		* col:X * 1, cell of string, describes the color of the X types; if not exist, the color will be randomly assigned.
 		* distance_type: 
-			* 1: the distance among the samples will be evalulate by spearman Correlation coefficient
-			* 2: the distance among the samples will be evalulate by euclidean distance
-		* neighbor_num: the number of neighbors (similar as plexity in python/R)
-		* p_cut, the cut-off to choose the features by one-way ANOVA test (i.e. 0.01).
+			* 1: The distance among the samples will be evaluated by the Spearman Correlation coefficient
+			* 2: The distance among the samples will be evaluated by Euclidean distance
+		* neighbor_num: the number of neighbors (similar to plexity in python/R)
+		* p_cut, the cut-off to choose the features by one-way ANOVA test (i.e., 0.01).
 	* Example code:
 		```
 		TSNE(1,30,0.01,'ANVOA_IFS_matrix.mat')
 		```
-	Spearman Correlation coefficient will be used to calculate the distance among the samples, 30 neighbors will be used in TSNE analysis, and all the the hotspots with anvoa p-value <= 0.01 will be used in TSNE.
+	Spearman Correlation coefficient will be used to calculate the distance among the samples, 30 neighbors will be used in TSNE analysis, and all the hotspots with anova p-value <= 0.01 will be used in TSNE.
 	* Output:
 		* two figures (TSNE_plot.pdf and TSNE_plot.fig) 
 		* a .mat file （tsne_score.mat） contains two variables:
-			* class_label：The labels of the samples
-			* score: The scores of the first two components of each samples.
+			* class_label： The labels of the samples
+			* score: The scores of the first two components of each sample.
 	
 	
 8. Unsupervised clustering after selecting features by one-way ANOVA test:
@@ -227,16 +227,16 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 		cluster_analysis_ANVOA.m
 		```
 	* Parameters:
-		* matrix file: The file should including at least three variable:
-			* data:N * M matrix,N - hotspots number,M - sample num;
-			* label:M * 1: The category of the M samples (1,2,3,etc)
+		* matrix file: The file should include at least three variables:
+			* data:N * M matrix,N - number of hotspots,M - sample num;
+			* label:M * 1: The category of the M samples (1,2,3, etc)
 			* p：N * 1：p-value of the hotspots in anvoa test
 			* col:X * 1,cell of string, describes the color of the X types, if not exist, the color will be randomly assigned.
 			* distance_type:
-				* 1: clustergram using spearman Correlation coefficient as similarity (distance evalulation method) and 'weighted' as linkage algorithm;
-				* 2: clustergram using euclidean as similarity (distance evalulation method) and 'ward' as linkage algorithm.
-			* p_cut:the cut-off to choose the features (i.e. 0.01).
-			* feature_num:The number of the type-specific hotspots in each type.
+				* 1: clustergram using Spearman's Correlation coefficient as similarity (distance evaluation method) and 'weighted' as linkage algorithm;
+				* 2: clustergram using Euclidean as similarity (distance evaluation method) and 'ward' as linkage algorithm.
+			* p_cut: the cut-off to choose the features (i.e. 0.01).
+			* feature_num: The number of the type-specific hotspots in each type.
 	* Example code:
 		```
 		cluster_analysis_ANVOA(1,0.01,5000,'ANVOA_IFS_matrix.mat')
@@ -245,10 +245,10 @@ You will need to run the script 'bam_read.py' to read the fragment for all the s
 5000 hotspots will be selected by the z-score difference, based on these hotspots, clustergram, with spearman Correlation coefficient as similarity (distance evalulation method) and 'weighted' as linkage algorithm, will be used to do hierarchical clustering.
 	* Output:
 		* two figures (clustering_result.fig and clustering_result.pdf)
-		* one .mat file contain the matrix that was used to do clustering analysis and the category information of these samples (cluster_anvoa_data.mat)
+		* one .mat file contain the matrix that was used to do clustering analysis and the category information of these samples (cluster_anova_data.mat)
 
 ### Cancer vs. healthy classification and tissues-of-origin prediction
-You should run the script 'bam_read.py' to read the fragment for all the samples and write it to txt files.We recommend put all the samples from the same data set into the same folder. For example, when we analysis the Sun et. al. data set, we should put the fragment information of all the samples in the folder PNAS
+You should run the script 'bam_read.py' to read the fragment for all the samples and write it to txt files. We recommend putting all the samples from the same data set into the same folder. For example, when we analyze the Sun et. al. data set, we should put the fragment information of all the samples in the folder PNAS
 ```
 cd CRAG/classification
 ```
@@ -256,7 +256,7 @@ cd CRAG/classification
 	```
 	IFS_write('PNAS/C309')
 	```
-2. Call hotspots for each category only in training fold in k-fold cross validation. If do 10-fold validation, the program should be executed 10 times, change ith from 1 to 10:
+2. Call hotspots for each category only in the training fold in k-fold cross-validation. If we do a 10-fold validation, the program should be executed 10 times, changing ith from 1 to 10:
 	* Function:
 		```
 		k_fold_call.m
@@ -344,7 +344,7 @@ The raw source code and their readme files for the publication are inside manusc
 
 ## Citation
 ```
-Zhou X & Liu Y. "De novo characterization of cell-free DNA fragmentation hotspots boosts the power for early detection and localization of multi-cancer". In preparation.
+Zhou, X., Zheng, H., Fu, H. et al. CRAG: de novo characterization of cell-free DNA fragmentation hotspots in plasma whole-genome sequencing. Genome Med 14, 138 (2022). https://doi.org/10.1186/s13073-022-01141-8
 ```
 ## License
 * For academic research, please refer to MIT license.
